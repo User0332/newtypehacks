@@ -21,38 +21,17 @@ function getUserInfo(userID) {
 	return getJSONInfoFromAPICall(`/api/get-user?id=${userID}`);
 }
 
-function getThreadInfo(threadID) {
-	return getJSONInfoFromAPICall(`/api/get-thread?id=${threadID}`);
-}
-
-function getChannelInfo(channelID) {
-	return getJSONInfoFromAPICall(`/api/get-channel-info?id=${channelID}`);
+function getAllMessages() {
+	return getJSONInfoFromAPICall(`/api/list-messages`);
 }
 
 function getMessageInfo(messageID) {
 	return getJSONInfoFromAPICall(`/api/get-message?id=${messageID}`);
 }
 
-function updateUserInfo(qualIDs) {
-	return getJSONInfoFromAPICall(`/api/update-user-roles?roles=${qualIDs.join(',')}`);
-}
-
-function getChannels() {
-	return getJSONInfoFromAPICall(`/api/get-channels`);
-}
-
-function createThreadAPI(channel, title, description) {
-	return getJSONInfoFromAPICall(`/api/create-thread`, JSON.stringify({
-		channel, title, description
-	}), "POST", {
-		"Content-Type": "application/json"
-	});
-}
-
-function sendMessageToServer(threadID, messageContent) {
+function sendMessageToServer(content) {
 	return getJSONInfoFromAPICall(`/api/send-message`, JSON.stringify({
-		threadID,
-		content: messageContent
+		content
 	}), "POST", {
 		"Content-Type": "application/json"
 	});

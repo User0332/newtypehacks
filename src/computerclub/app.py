@@ -41,7 +41,8 @@ def webpy_setup(app: App):
 		__tablename__ = "user"
 		id: str = db.Column(db.String, primary_key=True, unique=True, nullable=False)
 		name: str = db.Column(db.String, unique=True, nullable=False)
-		
+		messages = db.relationship("Message", backref=db.backref("author"), lazy=True)
+	
 		# schedule
 
 		@property
@@ -71,7 +72,6 @@ def webpy_setup(app: App):
 		timestamp: str = db.Column(db.String, nullable=False)
 
 		# author: User
-		# thread: MessageThread
 
 
 	T = TypeVar('T')
@@ -138,7 +138,56 @@ def get_user():
 	return jsonify({
 		"id": user.id, 
 		"name": user.name,
-		"threads": [thread.id for thread in user.threads], 
-		"messages": [message.id for message in user.messages],
-		"authorizedChannels": user.authorized_channels
+	})
+
+@app.route("/api/list-messages")
+@auth.require_user
+def get_messages():
+	ensure_user()
+
+	return jsonify([message.id for message in query_all_of(Message)])
+
+@app.route("/api/get-message")
+@auth.require_user
+def get_message():
+	ensure_user()
+
+	message = query_by_id(Message, request.args.get("id"))
+
+	if not message: return Response(status=400)
+
+	return jsonify({
+		"author": message.author.id,
+		"content": message.content
+	})
+
+
+@app.route("/api/send-message", methods=["POST"])
+@auth.require_user
+def send_message():
+	user = ensure_user()
+
+	content = request.json.get("content")
+
+	if not content: return Response(status=400)
+
+	message = Message(
+		id=gen_id(),
+		content=content,
+		timestamp=datetime.datetime.now().isoformat(),
+		parent_user_id=user.id
+	)
+
+	db.session.add(message)
+	db.session.commit()
+
+	socketio.emit("new-message", {
+		"content": content,
+		"authorName": user.name,
+		"authorID": user.id
+	})
+
+	return jsonify({
+		"status": "success",
+		"reason": message.id
 	})

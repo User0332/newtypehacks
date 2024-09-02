@@ -1,8 +1,6 @@
-const threadID = new URLSearchParams(location.search).get("id");
 const messageInput = document.getElementById("message-input");
 const messagePreview = document.getElementById("message-preview");
 const messageContainer = document.getElementById("message-container");
-const threadContentContainer = document.getElementById("thread-content-container");
 const socket = io();
 const md = window.markdownit();
 
@@ -59,7 +57,7 @@ async function renderLocalMessage(localMessageInfo) {
 }
 
 async function renderAllDBMessages() {
-	const messages = (await getThreadInfo(threadID)).messages;
+	const messages = (await getAllMessages());
 
 	for (const messageID of messages) {
 		renderDBMessage(
@@ -71,26 +69,13 @@ async function renderAllDBMessages() {
 function sendMessage() {
 	const messageContent = messageInput.value;
 
-	sendMessageToServer(threadID, messageContent).then((resp) => {
+	sendMessageToServer(messageContent).then((resp) => {
 		if (resp.status != "success") alert("You may not send messages in this thread!");
 	});
 
 	messageInput.value = "";
 	messagePreview.innerHTML = "";
 }
-
-getThreadInfo(threadID).then(async (threadInfo) => {
-	document.getElementById("thread-title").textContent = threadInfo.title;
-	document.getElementById("thread-description").innerHTML = md.render(threadInfo.description);
-	
-	const channelName = (await getChannelInfo(threadInfo.channel)).name;
-
-	const backAnchor = document.getElementById("back-anchor");
-
-	backAnchor.href = `/view-channel?id=${threadInfo.channel}`;
-	backAnchor.textContent = `Go back to Channel '${channelName}'`;
-
-})
 
 renderAllDBMessages();
 

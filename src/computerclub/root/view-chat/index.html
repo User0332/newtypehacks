@@ -18,38 +18,36 @@
 		<script src="/static/js/userauth.js"></script>
 		<script src="/static/js/apihelpers.js"></script>
 		<script src="/static/js/element.js"></script>
+		<script src="/static/js/chat.js" defer></script>
 
-		<script src="/static/js/view-thread.js" defer></script>
 		<link rel="stylesheet" href="/static/css/theme.css">
-		<link rel="stylesheet" href="/static/css/view-thread.css">
+		<link rel="stylesheet" href="/static/css/chat.css">
 	</head>
 
-	<body class="bg-success text-light">
+	<body class="bg-primary text-light">
 		<div class="sidebar">
-			<a href=/home>Home</a>
-			<a href=/self-profile>Profile</a>
-			<a href=/logout>Logout</a>
+			<a href="/home">Home</a>
+			<a href="/self-profile">Profile</a>
+			<a href="/view-chat">Chat</a>
+			<a href="/view-calendar">Calendar</a>
+			<a href="/logout">Logout</a>
 		</div>
 
 		<div class="content">
-			<div id="wrapper" class="container mt-5 p-4 bg-light text-success rounded border border-success">
-				<h1 id="thread-title" class="text-center text-success"></h1>
+			<div id="wrapper" class="container mt-5 p-4 bg-light text-primary rounded border border-primary">
+				<h1 id="heading" class="text-center text-primary">Welcome to the Chat!</h1>
 				
-				<div id="thread-content-container" class="mb-4 rounded overflow-auto large-scrollable-container text-success">
-					<p id="thread-description" class="text-center text-success"></p>
-
-					<div id="message-container">
-					</div>
+				<div id="message-container" class="mb-4 rounded overflow-auto large-scrollable-container text-primary">
 				</div>
 
 				<div class="d-flex mb-4">
 					<textarea id="message-input" type="text" class="form-control me-2" placeholder="Type a message"></textarea>
-					<button onclick="sendMessage()" class="btn btn-success">Send</button>
+					<button onclick="sendMessage()" class="btn btn-primary">Send</button>
 				</div>
 
 				<div id="message-preview" class="message-content"></div>
 
-				<a id="back-anchor" href="#" class="text-success"></a>
+				<a id="back-anchor" href="#" class="text-primary"></a>
 			</div>
 		</div>
 	</body>
