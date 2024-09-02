@@ -1,0 +1,30 @@
+.program-card {
+	margin-top: 5rem;
+	margin-bottom: 5rem;
+}
+
+.program-card-even {
+	opacity: 0; /* Initially hidden */ 
+	transform: translateX(200%);
+	transition: transform 1s ease-out, opacity 1s ease-out; /* Smooth transition */
+}
+
+
+.program-card-odd {
+	opacity: 0; /* Initially hidden */ 
+	transform: translateX(-200%);
+	transition: transform 1s ease-out, opacity 1s ease-out; /* Smooth transition */
+}
+
+.slide-in {
+	opacity: 1;
+	transform: translateX(0);
+}
+
+.program-card-container {
+	overflow-x: hidden;
+}
+
+.program-icon {
+	max-height: 200px;
+}
