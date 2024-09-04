@@ -5,11 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
 		initialView: "dayGridMonth"
 	});
 
-	const ev = calendar.addEvent({
-		title: "Meeting",
-		start: "2024-09-03T10:30:00",
-		end: "2024-09-03T11:00:00"
-	});
+	getAllCalendarEventObjects().then((eventInfos) => {
+		for (const eventInfo of eventInfos) {
+			const ev = calendar.addEvent({
+				title: eventInfo.title,
+				start: eventInfo.startTime,
+				end: eventInfo.endTime,
+				url: `/view-event?id=${eventInfo.id}`
+			});
+		}
+	}).then(() => calendar.render());
 
-	calendar.render();
 });

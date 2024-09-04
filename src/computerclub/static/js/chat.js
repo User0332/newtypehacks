@@ -32,7 +32,7 @@ async function renderDBMessage(messageInfo) {
 
 	messageContainer.appendChild(messageDiv);
 
-	threadContentContainer.scrollTop = threadContentContainer.scrollHeight;
+	messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 
 async function renderLocalMessage(localMessageInfo) {
@@ -53,7 +53,7 @@ async function renderLocalMessage(localMessageInfo) {
 
 	messageContainer.appendChild(messageDiv);
 
-	threadContentContainer.scrollTop = threadContentContainer.scrollHeight;
+	messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 
 async function renderAllDBMessages() {

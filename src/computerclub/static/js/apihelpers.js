@@ -25,6 +25,18 @@ function getAllMessages() {
 	return getJSONInfoFromAPICall(`/api/list-messages`);
 }
 
+function getAllCalendarEvents() {
+	return getJSONInfoFromAPICall(`/api/calendar/list-events`);
+}
+
+function getAllCalendarEventObjects () {
+	return getJSONInfoFromAPICall(`/api/calendar/get-aggregated-event-info`);
+}
+
+function getEventInfo(eventID) {
+	return getJSONInfoFromAPICall(`/api/calendar/get-event?id=${eventID}`);
+}
+
 function getMessageInfo(messageID) {
 	return getJSONInfoFromAPICall(`/api/get-message?id=${messageID}`);
 }
